@@ -17,10 +17,6 @@
             <groupId>com.vfxware</groupId>
             <artifactId>hello-module</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!--this is very important, add a runtime scope-->
-            <!--it seems in this way it's only works with war build instead of a jar-->
-            <type>war</type>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -28,22 +24,34 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <overlays>
-                        <overlay>
-                            <!--this id must be the same name of the  dependency artifactId-->
-                            <id>hello-module</id>
-<!--                            <groupId>com.vfxware</groupId>-->
-<!--                            <artifactId>hello-module</artifactId>-->
-<!--                            <type>jar</type>-->
-                            <includes>
-                                <include>**/*.jsp</include>
-                            </includes>
-                            <targetPath>WEB-INF/pages</targetPath>
-                        </overlay>
-                    </overlays>
-                </configuration>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-jsp</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        /home/tom/src/springLearning/multiModuleLearning/hello-module/src/main/webapp/WEB-INF/pages
+                                    </directory>
+                                    <includes>
+                                        <include>
+                                            **/*.jsp
+                                        </include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
