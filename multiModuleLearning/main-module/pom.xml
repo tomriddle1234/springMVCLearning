@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>multiModuleLearning</artifactId>
+        <groupId>com.vfxware</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>main-module</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.vfxware</groupId>
+            <artifactId>hello-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <!--this is very important, add a runtime scope-->
+            <!--it seems in this way it's only works with war build instead of a jar-->
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <overlays>
+                        <overlay>
+                            <!--this id must be the same name of the  dependency artifactId-->
+                            <id>hello-module</id>
+<!--                            <groupId>com.vfxware</groupId>-->
+<!--                            <artifactId>hello-module</artifactId>-->
+<!--                            <type>jar</type>-->
+                            <includes>
+                                <include>**/*.jsp</include>
+                            </includes>
+                            <targetPath>WEB-INF/pages</targetPath>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
