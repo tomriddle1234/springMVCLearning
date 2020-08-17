@@ -32,15 +32,14 @@
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
-
                         <configuration>
                             <outputDirectory>
-                                ${project.build.outputDirectory}/
+                                ${project.build.directory}/${project.build.finalName}/WEB-INF/pages
                             </outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>
-                                        /home/tom/src/springLearning/multiModuleLearning/hello-module/src/main/webapp/WEB-INF/pages
+                                        ${project.basedir}/../hello-module/src/main/webapp/WEB-INF/pages
                                     </directory>
                                     <includes>
                                         <include>
